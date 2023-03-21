@@ -1,9 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
 function Price() {
+  const [coin, setCoin] = useState(null);
+
   const params = useParams();
 
   const apiKey = '2FFA9750-D2ED-40B9-ACBD-D1C027E35041';
@@ -14,7 +16,7 @@ function Price() {
   const getCoin = async () => {
     try {
       const res = await axios.get(url);
-      console.log(res.data);
+      setCoin(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -24,7 +26,19 @@ function Price() {
     getCoin();
   }, []);
 
-  return <h1>Price</h1>;
+  const loaded = () => {
+    return (
+      <div>
+        <h1>
+          {coin.asset_id_base}/{coin.asset_id_quote}
+        </h1>
+        <h2>$ {coin.rate}</h2>
+      </div>
+    );
+  };
+  const loading = () => <h1>Loading...</h1>;
+
+  return coin && coin.rate ? loaded() : loading();
 }
 
 export default Price;
