@@ -8,10 +8,10 @@ function Price() {
 
   const params = useParams();
 
-  const apiKey = '2FFA9750-D2ED-40B9-ACBD-D1C027E35041';
+  const apiKey = process.env.REACT_APP_API_KEY;
   const symbol = params.symbol;
 
-  const url = `http://rest-sandbox.coinapi.io/v1/exchangerate/${symbol}/USD?apikey=${apiKey}`;
+  const url = `http://rest.coinapi.io/v1/exchangerate/${symbol}/USD?apikey=${apiKey}`;
 
   const getCoin = async () => {
     try {
